@@ -2,12 +2,15 @@ import OpenAI from 'openai';
 import type { ChatMessage } from '@/types/solar';
 
 // Cliente OpenAI (deve ser inicializado com a API key no ambiente)
+// ATENÇÃO: dangerouslyAllowBrowser é usado apenas para desenvolvimento/demo
+// Em produção, SEMPRE use um backend para fazer chamadas à API OpenAI
+// para proteger sua API key e evitar exposição no navegador
 let openaiClient: OpenAI | null = null;
 
 export function initOpenAI(apiKey: string) {
   openaiClient = new OpenAI({
     apiKey,
-    dangerouslyAllowBrowser: true, // Para desenvolvimento - em produção, use um backend
+    dangerouslyAllowBrowser: true, // ⚠️ APENAS PARA DESENVOLVIMENTO
   });
 }
 

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import type { ChatMessage } from '@/types/solar';
 import { enviarMensagemChat, gerarSystemPrompt, transcreverAudio } from '@/lib/openai-integration';
 
@@ -22,6 +22,9 @@ export default function ChatWidget({ apiKey }: ChatWidgetProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
+  // Memoize system prompt to avoid regenerating on every render
+  const systemPrompt = useMemo(() => gerarSystemPrompt(), []);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -41,7 +44,7 @@ export default function ChatWidget({ apiKey }: ChatWidgetProps) {
     setIsLoading(true);
 
     try {
-      const response = await enviarMensagemChat([...messages, userMessage], gerarSystemPrompt());
+      const response = await enviarMensagemChat([...messages, userMessage], systemPrompt);
       
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),

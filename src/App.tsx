@@ -20,9 +20,11 @@ function App() {
 
   const handleApiKeySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (apiKey.trim()) {
+    if (apiKey.trim() && apiKey.startsWith('sk-') && apiKey.length > 20) {
       initOpenAI(apiKey);
       setShowApiKeyInput(false);
+    } else {
+      alert('Por favor, insira uma API Key válida da OpenAI (deve começar com "sk-")');
     }
   };
 

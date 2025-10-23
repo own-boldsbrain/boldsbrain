@@ -17,7 +17,10 @@ const TARIFA_MEDIA_BRASIL = 0.89; // R$/kWh (média Brasil 2024)
 /**
  * Calcula o dimensionamento do sistema solar baseado no consumo
  * @param consumo Dados de consumo do cliente
- * @param performanceRatio Performance Ratio (PR) - fator de eficiência do sistema
+ * @param performanceRatio Performance Ratio (PR) - fator de perda do sistema
+ * Valores típicos: 1.14 (perdas 12%), 1.30 (perdas 23%), 1.45 (perdas 31%)
+ * Nota: O PR aqui é usado como divisor para compensar perdas, não como multiplicador de eficiência.
+ * Um PR de 1.30 significa que o sistema real produz 1/1.30 = 77% da capacidade teórica.
  * @returns Dimensionamento do sistema
  */
 export function calcularDimensionamento(
@@ -28,11 +31,12 @@ export function calcularDimensionamento(
   const consumoDiarioKwh = consumo.consumoMedioKwh / 30;
   
   // Potência necessária em kWp
-  // Fórmula: Potência = (Consumo diário) / (Irradiação × PR)
-  const potenciaKwp = consumoDiarioKwh / (IRRADIACAO_MEDIA_BRASIL * performanceRatio);
+  // Fórmula: Potência = (Consumo diário) / (Irradiação × (1/PR))
+  // O PR é usado como divisor para compensar as perdas do sistema
+  const potenciaKwp = consumoDiarioKwh / (IRRADIACAO_MEDIA_BRASIL / performanceRatio);
   
   // Geração mensal estimada (kWh/mês)
-  const geracaoEstimadaKwhMes = potenciaKwp * IRRADIACAO_MEDIA_BRASIL * performanceRatio * 30;
+  const geracaoEstimadaKwhMes = potenciaKwp * IRRADIACAO_MEDIA_BRASIL * (1 / performanceRatio) * 30;
   
   // Número de módulos necessários
   const numeroModulos = Math.ceil((potenciaKwp * 1000) / POTENCIA_MODULO_PADRAO);
@@ -169,7 +173,7 @@ export function verificarLei14300(
  */
 export const glossario = {
   kWp: 'Quilowatt-pico: potência máxima que um painel solar pode gerar em condições ideais de teste (1000 W/m², 25°C).',
-  PR: 'Performance Ratio: índice que mede a eficiência real do sistema. Considera perdas por temperatura, sujeira, cabos, inversor, etc. Típico: 75-85% (PR 1.14-1.30).',
+  PR: 'Performance Ratio: fator de perda do sistema real vs teórico. Valores típicos: 1.14 (12% perdas), 1.30 (23% perdas), 1.45 (31% perdas). Quanto maior o PR, mais o sistema precisa ser superdimensionado para compensar perdas por temperatura, sujeira, cabos, inversor, etc.',
   kWh: 'Quilowatt-hora: unidade de medida de energia. É o que você consome e paga na conta de luz.',
   'TUSD Fio B': 'Taxa de distribuição de energia. Pela Lei 14.300, novos sistemas pagam parte desta taxa.',
   'Microgeração': 'Sistema de até 75 kWp de potência instalada.',
