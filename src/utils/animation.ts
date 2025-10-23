@@ -42,9 +42,12 @@ export const EASINGS = {
  * Framer Motion variants that respect reduced motion
  */
 export function createMotionVariants(config: {
-  initial?: Record<string, unknown>;
-  animate?: Record<string, unknown>;
-  exit?: Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initial?: Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  animate?: Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  exit?: Record<string, any>;
   duration?: number;
 }) {
   const duration = getAnimationDuration(config.duration ?? 0.2);

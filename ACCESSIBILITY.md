@@ -2,7 +2,7 @@
 
 ## Guia de Acessibilidade para Desenvolvedores
 
-Este documento descreve as diretrizes de acessibilidade implementadas no projeto boldsbrain, seguindo os mega prompts de UI — Interações, Animação, Layout, Conteúdo e A11Y, Desempenho e Design.
+Este documento descreve as diretrizes de acessibilidade implementadas no projeto boldsbrain, seguindo padrões internacionais de acessibilidade web incluindo WAI-ARIA APG (Authoring Practices Guide), WCAG 2.2 e as melhores práticas de UI para Interações, Animação, Layout, Conteúdo, Desempenho e Design.
 
 ## 📋 Índice
 
@@ -142,11 +142,14 @@ O CSS global garante isso automaticamente:
 
 ### NEVER: Desabilitar Zoom
 
-O meta viewport está configurado corretamente:
+O meta viewport está configurado corretamente para permitir zoom do usuário:
 
 ```html
+<!-- Permite zoom até 5x (user-scalable é default, mas explícito aqui) -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
 ```
+
+**Importante**: Nunca use `user-scalable=no` ou `maximum-scale=1.0` pois isso viola WCAG 2.2 e impede que usuários com baixa visão aumentem o zoom.
 
 ### MUST: touch-action: manipulation
 
@@ -570,7 +573,7 @@ npm run lint
 - **Target Size**: 24×24px mínimo (WCAG 2.5.8 Enhanced)
 - **Contrast**: 4.5:1 para texto normal
 - **Focus Indicators**: 2px solid com offset
-- **Motion Duration**: 0.01ms com prefers-reduced-motion
+- **Motion Duration**: Animações efetivamente desabilitadas (≤0.01s) quando `prefers-reduced-motion: reduce`
 
 ---
 

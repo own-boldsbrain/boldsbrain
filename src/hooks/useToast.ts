@@ -3,7 +3,7 @@
  */
 
 import { useContext } from 'react';
-import { ToastContext } from './ToastContext';
+import { ToastContext } from '../components/ToastContext';
 
 export function useToast() {
   const context = useContext(ToastContext);

@@ -1,6 +1,8 @@
 # boldsbrain
 
-App React 19 para gestão solar no Brasil com acessibilidade completa seguindo WAI-ARIA APG e WCAG 2.2.
+**Sistema de gestão solar fotovoltaica** para o mercado brasileiro com foco em acessibilidade completa.
+
+App React 19 para dimensionamento de sistemas solares, cálculo de kits, análise de consumo e financiamento, seguindo WAI-ARIA APG e WCAG 2.2. Interface 100% em português brasileiro com suporte completo para leitores de tela, navegação por teclado e dispositivos móveis.
 
 ## 🚀 Tecnologias
 
@@ -29,7 +31,7 @@ Este projeto implementa **diretrizes completas de acessibilidade** seguindo:
 ✅ **Mobile**: Inputs ≥16px, zoom nunca desabilitado, touch-action  
 ✅ **Foco Visível**: :focus-visible em todos os elementos interativos  
 
-📖 [**Documentação Completa de Acessibilidade**](./ACCESSIBILITY.md)
+📖 [Documentação Completa de Acessibilidade](./ACCESSIBILITY.md)
 
 ## 🏃 Quick Start
 
