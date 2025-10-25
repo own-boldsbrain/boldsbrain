@@ -66,10 +66,10 @@ export default function FinanciamentoWidget({ valorSistema, economiaAnual }: Fin
         Compare o valor da parcela com sua conta de energia atual
       </p>
 
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="mb-6" role="group" aria-labelledby="modalidade-label">
+        <p id="modalidade-label" className="block text-sm font-medium text-gray-700 mb-2">
           Modalidade de Pagamento
-        </label>
+        </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <button
             onClick={() => setModalidade('vista')}
